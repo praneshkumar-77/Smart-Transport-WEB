@@ -1,0 +1,31 @@
+# Native Node.js & React
+node_modules/
+dist/
+dist-ssr/
+build/
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+
+# Native Java & Spring Boot
+backend/target/
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS metadata
+.DS_Store
+Thumbs.db
