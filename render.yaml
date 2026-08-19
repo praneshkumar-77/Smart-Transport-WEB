@@ -1,0 +1,46 @@
+services:
+  # Database Service
+  - type: pgo
+    name: smart-transport-db
+    plan: free
+    version: 15
+
+  # Spring Boot Backend
+  - type: web
+    name: smart-transport-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        fromDatabase:
+          name: smart-transport-db
+          property: connectionString
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: smart-transport-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: smart-transport-db
+          property: password
+
+  # React Frontend
+  - type: web
+    name: smart-transport-frontend
+    env: static
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: ./frontend/dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: smart-transport-backend
+          property: host
