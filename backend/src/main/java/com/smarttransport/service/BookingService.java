@@ -23,6 +23,7 @@ public class BookingService {
     private final CustomerRepository customerRepository;
     private final VehicleRepository vehicleRepository;
     private final TripRepository tripRepository;
+    private final com.smarttransport.repository.DriverRepository driverRepository;
 
     @Transactional
     public Booking createBooking(BookingRequest request) {
