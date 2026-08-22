@@ -78,11 +78,25 @@ public class BookingService {
                 .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
     }
 
-    public Booking confirmBooking(Long id) {
+    public Booking confirmBooking(Long id, Long driverId) {
         Booking booking = getBookingById(id);
         if (booking.getStatus() == BookingStatus.CANCELLED) {
             throw new RuntimeException("Cannot confirm a cancelled booking");
         }
+
+        if (driverId != null && booking.getTrip() != null) {
+            Driver driver = driverRepository.findById(driverId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Driver not found"));
+
+            if (driver.getAvailabilityStatus() != DriverStatus.AVAILABLE) {
+                throw new RuntimeException("Driver is not available");
+            }
+
+            Trip trip = booking.getTrip();
+            trip.setDriver(driver);
+            tripRepository.save(trip);
+        }
+
         booking.setStatus(BookingStatus.CONFIRMED);
         return bookingRepository.save(booking);
     }

@@ -1,51 +1,92 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { UserPlus } from 'lucide-react';
+import { MoveRight, UserPlus, Bus } from 'lucide-react';
 
 const Register = () => {
-    const [formData, setFormData] = useState({ name: '', email: '', password: '', phone: '' });
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        password: '',
+        role: 'CUSTOMER'
+    });
     const [error, setError] = useState('');
     const { register } = useAuth();
     const navigate = useNavigate();
-
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             await register(formData);
-            navigate('/customer-dashboard');
+            navigate('/login');
         } catch (err) {
             setError(err.message || 'Registration failed.');
         }
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', background: 'radial-gradient(circle at top left, #1e293b, #0f172a)' }}>
-            <div className="glass-panel fade-in" style={{ width: '100%', maxWidth: '450px' }}>
-                <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-                    <h2 style={{ fontSize: '28px', fontWeight: '700', color: 'white', marginBottom: '8px' }}>Create Account</h2>
-                    <p style={{ color: 'var(--text-secondary)' }}>Join Smart Transport Platform</p>
+        <div className="auth-container">
+            <div className="auth-box fade-in">
+                <div style={{ textAlign: 'center', marginBottom: '25px' }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '50px', height: '50px', borderRadius: '50%', background: 'var(--bg-accent-light)', marginBottom: '15px' }}>
+                        <UserPlus color="var(--bg-accent)" size={24} />
+                    </div>
+                    <h2 style={{ fontSize: '24px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '8px' }}>Create an Account</h2>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Join Smart Transport today</p>
                 </div>
 
-                {error && <div style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--error)', padding: '10px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px' }}>{error}</div>}
+                {error && <div style={{ background: 'var(--bg-accent-light)', color: 'var(--error)', padding: '12px', borderRadius: '8px', marginBottom: '20px', fontSize: '14px', border: '1px solid var(--error)' }}>{error}</div>}
 
-                <form onSubmit={handleSubmit}>
-                    <input type="text" name="name" className="input-field" placeholder="Full Name" value={formData.name} onChange={handleChange} required />
-                    <input type="email" name="email" className="input-field" placeholder="Email Address" value={formData.email} onChange={handleChange} required />
-                    <input type="text" name="phone" className="input-field" placeholder="Phone Number" value={formData.phone} onChange={handleChange} required />
-                    <input type="password" name="password" className="input-field" placeholder="Password (min 6 chars)" value={formData.password} onChange={handleChange} required minLength={6} />
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                    <input
+                        type="text"
+                        className="form-input"
+                        placeholder="Full Name"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        required
+                    />
+                    <input
+                        type="email"
+                        className="form-input"
+                        placeholder="Email Address"
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        required
+                    />
+                    <input
+                        type="tel"
+                        className="form-input"
+                        placeholder="Phone Number"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        required
+                    />
+                    <input
+                        type="password"
+                        className="form-input"
+                        placeholder="Password"
+                        value={formData.password}
+                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                        required
+                    />
+                    <select
+                        className="form-input"
+                        value={formData.role}
+                        onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                    >
+                        <option value="CUSTOMER">Passenger</option>
+                        <option value="DRIVER">Driver</option>
+                    </select>
 
                     <button type="submit" className="btn-primary" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', marginTop: '10px' }}>
-                        Register <UserPlus size={18} />
+                        Create Account <MoveRight size={18} />
                     </button>
                 </form>
 
-                <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '14px', color: 'var(--text-secondary)' }}>
-                    Already have an account? <Link to="/login" style={{ color: 'var(--bg-accent)', textDecoration: 'none', fontWeight: '500' }}>Sign In</Link>
+                <div style={{ textAlign: 'center', marginTop: '25px', fontSize: '14px', color: 'var(--text-secondary)', borderTop: '1px solid var(--border-light)', paddingTop: '20px' }}>
+                    Already have an account? <Link to="/login" style={{ color: 'var(--bg-accent)', textDecoration: 'none', fontWeight: '600' }}>Sign in instead</Link>
                 </div>
             </div>
         </div>

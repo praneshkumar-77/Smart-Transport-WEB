@@ -38,8 +38,9 @@ public class BookingController {
 
     @PutMapping("/{id}/confirm")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Map<String, Object>> confirmBooking(@PathVariable Long id) {
-        return buildResponse(bookingService.confirmBooking(id), "Booking confirmed successfully");
+    public ResponseEntity<Map<String, Object>> confirmBooking(@PathVariable Long id,
+            @RequestParam(required = false) Long driverId) {
+        return buildResponse(bookingService.confirmBooking(id, driverId), "Booking confirmed successfully");
     }
 
     @PutMapping("/{id}/cancel")

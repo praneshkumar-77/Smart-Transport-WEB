@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { MoveRight } from 'lucide-react';
+import { MoveRight, Bus } from 'lucide-react';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -21,19 +21,22 @@ const Login = () => {
     };
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', background: 'radial-gradient(circle at top right, #1e293b, #0f172a)' }}>
-            <div className="glass-panel fade-in" style={{ width: '100%', maxWidth: '400px' }}>
+        <div className="auth-container">
+            <div className="auth-box fade-in">
                 <div style={{ textAlign: 'center', marginBottom: '30px' }}>
-                    <h2 style={{ fontSize: '28px', fontWeight: '700', color: 'white', marginBottom: '8px' }}>Welcome Back</h2>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '50px', height: '50px', borderRadius: '50%', background: 'var(--bg-accent-light)', marginBottom: '15px' }}>
+                        <Bus color="var(--bg-accent)" size={24} />
+                    </div>
+                    <h2 style={{ fontSize: '28px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '8px' }}>Welcome Back</h2>
                     <p style={{ color: 'var(--text-secondary)' }}>Sign in to Smart Transport</p>
                 </div>
 
-                {error && <div style={{ background: 'rgba(239, 68, 68, 0.1)', color: 'var(--error)', padding: '10px', borderRadius: '8px', marginBottom: '16px', fontSize: '14px' }}>{error}</div>}
+                {error && <div style={{ background: 'var(--bg-accent-light)', color: 'var(--error)', padding: '12px', borderRadius: '8px', marginBottom: '20px', fontSize: '14px', border: '1px solid var(--error)' }}>{error}</div>}
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
                     <input
                         type="email"
-                        className="input-field"
+                        className="form-input"
                         placeholder="Email Address"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -41,7 +44,7 @@ const Login = () => {
                     />
                     <input
                         type="password"
-                        className="input-field"
+                        className="form-input"
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -52,8 +55,8 @@ const Login = () => {
                     </button>
                 </form>
 
-                <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '14px', color: 'var(--text-secondary)' }}>
-                    Don't have an account? <Link to="/register" style={{ color: 'var(--bg-accent)', textDecoration: 'none', fontWeight: '500' }}>Register here</Link>
+                <div style={{ textAlign: 'center', marginTop: '25px', fontSize: '14px', color: 'var(--text-secondary)', borderTop: '1px solid var(--border-light)', paddingTop: '20px' }}>
+                    Don't have an account? <Link to="/register" style={{ color: 'var(--bg-accent)', textDecoration: 'none', fontWeight: '600' }}>Register here</Link>
                 </div>
             </div>
         </div>
