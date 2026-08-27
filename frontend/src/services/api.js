@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: import.meta.env.MODE === 'development' ? 'http://localhost:8080/api' : '/api',
+    baseURL: import.meta.env.MODE === 'development' ? 'http://localhost:8080/api' : (import.meta.env.VITE_API_URL ? `https://${import.meta.env.VITE_API_URL}/api` : '/api'),
 });
 
 // Automatically inject JWT token into authorization header if it exists
