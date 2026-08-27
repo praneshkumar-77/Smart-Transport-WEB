@@ -8,4 +8,4 @@ FROM eclipse-temurin:17-jre
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["sh", "-c", "if [ -n \"$DB_HOST\" ]; then export JDBC_URL=\"jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME\"; fi && java -jar app.jar"]
+ENTRYPOINT ["sh", "-c", "if [ -n \"$DB_HOST\" ]; then export SPRING_DATASOURCE_URL=\"jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME\"; fi && java -jar app.jar"]
