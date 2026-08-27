@@ -15,10 +15,18 @@ services:
     plan: free
     healthCheckPath: /api/health
     envVars:
-      - key: SPRING_DATASOURCE_URL
+      - key: DB_HOST
         fromDatabase:
           name: smart-transport-db
-          property: connectionString
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: smart-transport-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: smart-transport-db
+          property: database
       - key: SPRING_DATASOURCE_USERNAME
         fromDatabase:
           name: smart-transport-db
