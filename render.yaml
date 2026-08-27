@@ -1,9 +1,10 @@
-services:
+databases:
   # Database Service
-  - type: pgo
-    name: smart-transport-db
+  - name: smart-transport-db
     plan: free
-    version: 15
+    version: "15"
+
+services:
 
   # Spring Boot Backend
   - type: web
