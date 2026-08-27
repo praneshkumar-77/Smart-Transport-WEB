@@ -9,7 +9,7 @@ services:
   # Spring Boot Backend
   - type: web
     name: smart-transport-backend
-    env: docker
+    runtime: docker
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     plan: free
@@ -31,8 +31,7 @@ services:
   # React Frontend
   - type: web
     name: smart-transport-frontend
-    env: static
-    plan: free
+    runtime: static
     buildCommand: cd frontend && npm install && npm run build
     staticPublishPath: ./frontend/dist
     routes:
