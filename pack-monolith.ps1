@@ -26,7 +26,7 @@ Copy-Item -Recurse -Force "$FRONTEND_DIR\dist\*" -Destination $STATIC_DIR
 
 Write-Host "Compiling Spring Boot Backend JAR..." -ForegroundColor Yellow
 Set-Location -Path $BACKEND_DIR
-$env:JAVA_HOME = "C:\Users\DELL\.vscode\extensions\redhat.java-1.55.0-win32-x64\jre\21.0.11-win32-x86_64"
+$env:JAVA_HOME = "C:\Program Files\Java\jdk-24"
 .\mvnw clean package -DskipTests
 
 Write-Host "SUCCESS Your monolithic App has been packed." -ForegroundColor Green

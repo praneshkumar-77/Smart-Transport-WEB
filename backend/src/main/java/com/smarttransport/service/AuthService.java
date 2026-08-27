@@ -31,12 +31,21 @@ public class AuthService {
                         throw new RuntimeException("Email already taken");
                 }
 
+                Role userRole = Role.CUSTOMER;
+                if (request.getRole() != null) {
+                        try {
+                                userRole = Role.valueOf(request.getRole().toUpperCase());
+                        } catch (IllegalArgumentException e) {
+                                userRole = Role.CUSTOMER;
+                        }
+                }
+
                 User user = User.builder()
                                 .name(request.getName())
                                 .email(request.getEmail())
                                 .password(passwordEncoder.encode(request.getPassword()))
                                 .phone(request.getPhone())
-                                .role(Role.CUSTOMER) // Default role for open registration
+                                .role(userRole)
                                 .build();
 
                 userRepository.save(user);

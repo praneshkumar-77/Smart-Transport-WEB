@@ -34,27 +34,35 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (email, password) => {
-        const response = await api.post('/auth/login', { email, password });
-        if (response.data.success) {
-            const userData = response.data.data;
-            localStorage.setItem('token', userData.token);
-            localStorage.setItem('user', JSON.stringify(userData));
-            setUser(userData);
-            return userData;
+        try {
+            const response = await api.post('/auth/login', { email, password });
+            if (response.data.success) {
+                const userData = response.data.data;
+                localStorage.setItem('token', userData.token);
+                localStorage.setItem('user', JSON.stringify(userData));
+                setUser(userData);
+                return userData;
+            }
+            throw new Error(response.data.message);
+        } catch (error) {
+            throw new Error(error.response?.data?.message || error.message);
         }
-        throw new Error(response.data.message);
     };
 
     const register = async (userData) => {
-        const response = await api.post('/auth/register', userData);
-        if (response.data.success) {
-            const data = response.data.data;
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data));
-            setUser(data);
-            return data;
+        try {
+            const response = await api.post('/auth/register', userData);
+            if (response.data.success) {
+                const data = response.data.data;
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify(data));
+                setUser(data);
+                return data;
+            }
+            throw new Error(response.data.message);
+        } catch (error) {
+            throw new Error(error.response?.data?.message || error.message);
         }
-        throw new Error(response.data.message);
     };
 
     const logout = () => {

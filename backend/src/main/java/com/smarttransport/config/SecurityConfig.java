@@ -34,11 +34,15 @@ public class SecurityConfig {
                 .cors(org.springframework.security.config.Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/api/health", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/health", "/swagger-ui/**", "/v3/api-docs/**",
+                                "/", "/index.html", "/assets/**", "/vite.svg", "/favicon.ico", "/error", "/ws/**",
+                                "/static/**")
+                        .permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/driver/**").hasAnyRole("ADMIN", "DRIVER")
                         .requestMatchers("/api/customer/**").hasAnyRole("ADMIN", "CUSTOMER")
-                        .anyRequest().authenticated())
+                        .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/**").authenticated()
+                        .anyRequest().permitAll())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

@@ -11,3 +11,6 @@ INSERT INTO drivers (id, user_id, license_number, license_expiry_date, availabil
 (1, 2, 'DL12345678', '2030-12-31', 'AVAILABLE', 1);
 
 -- Bump the sequence for users and vehicles because of manual inserts
+ALTER TABLE users ALTER COLUMN id RESTART WITH 3;
+ALTER TABLE vehicles ALTER COLUMN id RESTART WITH 4;
+ALTER TABLE drivers ALTER COLUMN id RESTART WITH 2;
