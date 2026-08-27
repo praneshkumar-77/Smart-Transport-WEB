@@ -2,7 +2,7 @@ databases:
   # Database Service
   - name: smart-transport-db
     plan: free
-    version: "15"
+    postgresMajorVersion: "15"
 
 services:
 
